@@ -341,7 +341,7 @@ fi
 # download bind9 from.
 rm -f /etc/resolv.conf
 management/editconf.py /etc/systemd/resolved.conf DNSStubListener=no
-echo "nameserver 127.0.0.1" > /etc/resolv.conf
+echo "nameserver 1.1.1.1 127.0.0.1" > /etc/resolv.conf
 
 # Restart the DNS services.
 
