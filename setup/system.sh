@@ -89,7 +89,7 @@ management/editconf.py /etc/systemd/journald.conf MaxRetentionSec=10day
 # PPAs so we can install those packages later.
 
 echo Updating system packages...
-hide_output apt-get update
+ hide_output apt update
 apt_get_quiet upgrade
 
 # Old kernels pile up over time and take up a lot of disk space, and because of Mail-in-a-Box
@@ -326,7 +326,7 @@ management/editconf.py /etc/default/named \
 
 if ! grep -q "listen-on " /etc/bind/named.conf.options; then
 	# Add a listen-on directive if it doesn't exist inside the options block.
-	sed -i "s/^}/\n\tlisten-on { 127.0.0.1; };\n}/" /etc/bind/named.conf.options
+	sed -i "s/^}/\n\tlisten-on { 1.1.1.1; };\n}/" /etc/bind/named.conf.options
 fi
 if ! grep -q "max-recursion-queries " /etc/bind/named.conf.options; then
 	# Add a max-recursion-queries directive if it doesn't exist inside the options block.
@@ -339,9 +339,9 @@ fi
 # which is where bind9 will be running. Obviously don't do this before
 # installing bind9 or else apt won't be able to resolve a server to
 # download bind9 from.
-#rm -f /etc/resolv.conf
+rm -f /etc/resolv.conf
 management/editconf.py /etc/systemd/resolved.conf DNSStubListener=no
-#echo "nameserver 1.1.1.1 127.0.0.1" > /etc/resolv.conf
+echo "nameserver 1.1.1.1" > /etc/resolv.conf
 
 # Restart the DNS services.
 
